@@ -1,0 +1,43 @@
+function enviar(){
+
+    let input = document.getElementById("texto");
+    let texto = input.value.trim();
+
+    if(texto === ""){
+        return;
+    }
+
+    let mensagens = document.getElementById("mensagens");
+
+    mensagens.innerHTML += `
+        <div class="usuario">
+            ${texto}
+        </div>
+    `;
+
+    input.value = "";
+
+    mensagens.scrollTop = mensagens.scrollHeight;
+
+    setTimeout(function(){
+
+        mensagens.innerHTML += `
+            <div class="ia">
+                🤖 Estou aprendendo...<br><br>
+                Em breve vou responder usando uma IA de verdade!
+            </div>
+        `;
+
+        mensagens.scrollTop = mensagens.scrollHeight;
+
+    },800);
+
+}
+
+document.getElementById("texto").addEventListener("keypress",function(event){
+
+    if(event.key==="Enter"){
+        enviar();
+    }
+
+});
