@@ -2,90 +2,129 @@
 <html lang="pt">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoYd AI</title>
 
-<title>LoYd AI</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="sidebar">
+<div class="app">
 
-<div class="logo">
-🤖 <span>LoYd AI</span>
+    <header class="topo">
+
+        <button class="menu-btn" onclick="abrirMenu()">
+            ☰
+        </button>
+
+        <div class="marca">
+            <img src="logo.png" alt="LoYd AI">
+            <span>LoYd AI</span>
+        </div>
+
+        <button class="novo-chat" onclick="novoChat()">
+            + Novo Chat
+        </button>
+
+    </header>
+
+
+    <div id="menuLateral" class="menu-lateral">
+
+        <button class="fechar-menu" onclick="fecharMenu()">
+            ✕
+        </button>
+
+        <h2>LoYd AI 🤖</h2>
+
+        <div class="menu-item" onclick="fecharMenu()">
+            💬 Conversas
+        </div>
+
+        <div class="menu-item" onclick="novoChat(); fecharMenu()">
+            ➕ Novo Chat
+        </div>
+
+        <div class="historico-titulo">
+            🕘 Histórico
+        </div>
+
+        <div id="listaHistorico" class="lista-historico">
+            <p>Nenhuma conversa ainda.</p>
+        </div>
+
+        <div class="menu-item">
+            🎨 Gerar Imagem
+        </div>
+
+        <div class="menu-item">
+            📄 Ler PDF
+        </div>
+
+        <div class="menu-item">
+            🌍 Tradutor
+        </div>
+
+        <div class="menu-item">
+            💻 Programação
+        </div>
+
+        <div class="menu-item">
+            ⚙️ Configurações
+        </div>
+
+    </div>
+
+
+    <main class="chat">
+
+        <div id="mensagens" class="mensagens">
+
+            <div class="mensagem ia">
+
+                <strong>LoYd AI 🤖</strong>
+
+                <p>Olá! 👋</p>
+
+                <p>
+                    Sou o LoYd AI.
+                    Como posso ajudar?
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="entrada">
+
+            <input
+                id="texto"
+                type="text"
+                placeholder="Digite sua mensagem..."
+                autocomplete="off"
+            >
+
+            <button
+                class="botao-microfone"
+                onclick="ouvir()"
+                title="Falar">
+                🎤
+            </button>
+
+            <button onclick="enviar()">
+                Enviar
+            </button>
+
+        </div>
+
+    </main>
+
 </div>
 
-<button class="novo-chat">
-➕ Novo Chat
-</button>
-
-<div class="menu">
-
-<div class="item">💬 Conversas</div>
-
-<div class="item">🎨 Gerar Imagem</div>
-
-<div class="item">📄 Ler PDF</div>
-
-<div class="item">🌍 Tradutor</div>
-
-<div class="item">💻 Programação</div>
-
-<div class="item">⚙️ Configurações</div>
-
-</div>
-
-</div>
-
-<div class="principal">
-
-<div class="topo">
-
-<h2>LoYd AI</h2>
-
-<div class="perfil">
-👤 LoYd
-</div>
-
-</div>
-
-<div id="mensagens" class="mensagens">
-
-<div class="ia">
-
-Olá, LoYd! 👋<br><br>
-
-Sou o LoYd AI.
-
-Ainda estou em desenvolvimento.
-
-Mas em breve vou conversar, gerar imagens, traduzir textos e muito mais.
-
-</div>
-
-</div>
-
-<div class="entrada">
-
-<input
-id="texto"
-type="text"
-placeholder="Digite sua mensagem...">
-
-<button onclick="enviar()">
-
-Enviar
-
-</button>
-
-</div>
-
-</div>
 
 <script src="script.js"></script>
 
