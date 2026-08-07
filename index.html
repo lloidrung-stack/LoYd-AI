@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LoYd AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <header class="topo">
+
+        <button class="menu-btn" onclick="abrirMenu()">
+            ☰
+        </button>
+
+        <div class="marca">
+            <img src="logo.png" alt="LoYd AI">
+            <span>LoYd AI</span>
+        </div>
+
+        <button class="novo-chat" onclick="novoChat()">
+            + Novo Chat
+        </button>
+
+    </header>
+
+
+    <div id="menuLateral" class="menu-lateral">
+
+        <button class="fechar-menu" onclick="fecharMenu()">
+            ✕
+        </button>
+
+        <h2>LoYd AI 🤖</h2>
+
+        <div class="menu-item" onclick="fecharMenu()">
+            💬 Conversas
+        </div>
+
+        <div class="menu-item" onclick="novoChat(); fecharMenu()">
+            ➕ Novo Chat
+        </div>
+
+        <div class="historico-titulo">
+            🕘 Histórico
+        </div>
+
+        <div id="listaHistorico" class="lista-historico">
+            <p>Nenhuma conversa ainda.</p>
+        </div>
+
+        <div class="menu-item">
+            🎨 Gerar Imagem
+        </div>
+
+        <div class="menu-item">
+            📄 Ler PDF
+        </div>
+
+        <div class="menu-item">
+            🌍 Tradutor
+        </div>
+
+        <div class="menu-item">
+            💻 Programação
+        </div>
+
+        <div class="menu-item">
+            ⚙️ Configurações
+        </div>
+
+    </div>
+
+
+    <main class="chat">
+
+        <div id="mensagens" class="mensagens">
+
+            <div class="mensagem ia">
+
+                <strong>LoYd AI 🤖</strong>
+
+                <p>Olá! 👋</p>
+
+                <p>
+                    Sou o LoYd AI.
+                    Como posso ajudar?
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="entrada">
+
+            <input
+                id="texto"
+                type="text"
+                placeholder="Digite sua mensagem..."
+                autocomplete="off"
+            >
+
+            <button
+                class="botao-microfone"
+                onclick="ouvir()"
+                title="Falar">
+                🎤
+            </button>
+
+            <button onclick="enviar()">
+                Enviar
+            </button>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+  </html>
