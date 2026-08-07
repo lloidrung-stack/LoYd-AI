@@ -1,0 +1,342 @@
+let historico =
+    JSON.parse(localStorage.getItem("loyD_historico")) || [];
+
+
+/* ENVIAR */
+
+function enviar() {
+
+    const input = document.getElementById("texto");
+    const texto = input.value.trim();
+
+    if (texto === "") return;
+
+    adicionarMensagem("usuario", texto);
+
+    historico.push({
+        tipo: "usuario",
+        texto: texto
+    });
+
+    salvarHistorico();
+    atualizarHistorico();
+
+    input.value = "";
+
+    const digitando = document.createElement("div");
+
+    digitando.className = "mensagem ia";
+
+    digitando.innerHTML = `
+        <strong>LoYd AI 🤖</strong>
+        <p>Estou a pensar... ⏳</p>
+    `;
+
+    document.getElementById("mensagens")
+        .appendChild(digitando);
+
+    setTimeout(function() {
+
+        digitando.remove();
+
+        responder(texto);
+
+    }, 800);
+}
+
+
+/* ADICIONAR MENSAGEM */
+
+function adicionarMensagem(tipo, texto) {
+
+    const mensagens =
+        document.getElementById("mensagens");
+
+    const div =
+        document.createElement("div");
+
+    div.className =
+        "mensagem " + tipo;
+
+    div.innerHTML = `
+        <strong>
+            ${tipo === "usuario"
+                ? "Você"
+                : "LoYd AI 🤖"}
+        </strong>
+
+        <p>${escaparHTML(texto)}</p>
+    `;
+
+    mensagens.appendChild(div);
+
+    mensagens.scrollTop =
+        mensagens.scrollHeight;
+}
+
+
+/* RESPOSTA */
+
+function responder(texto) {
+
+    const pergunta =
+        texto.toLowerCase();
+
+    let resposta;
+
+    if (
+        pergunta.includes("olá") ||
+        pergunta.includes("ola") ||
+        pergunta.includes("oi")
+    ) {
+
+        resposta =
+            "Olá! 👋 Como estás?";
+
+    }
+
+    else if (
+        pergunta.includes("quem é você") ||
+        pergunta.includes("quem e voce")
+    ) {
+
+        resposta =
+            "Sou o LoYd AI 🤖, o teu assistente virtual.";
+
+    }
+
+    else if (
+        pergunta.includes("nome")
+    ) {
+
+        resposta =
+            "O meu nome é LoYd AI. 😎";
+
+    }
+
+    else if (
+        pergunta.includes("ajuda")
+    ) {
+
+        resposta =
+            "Claro! 🚀 Diz-me o que precisas.";
+
+    }
+
+    else if (
+        pergunta.includes("obrigado") ||
+        pergunta.includes("obrigada")
+    ) {
+
+        resposta =
+            "De nada! 😄";
+
+    }
+
+    else {
+
+        resposta =
+            "Recebi a tua mensagem! 🤖 Ainda estou em desenvolvimento.";
+
+    }
+
+    adicionarMensagem("ia", resposta);
+
+    historico.push({
+        tipo: "ia",
+        texto: resposta
+    });
+
+    salvarHistorico();
+    atualizarHistorico();
+}
+
+
+/* NOVO CHAT */
+
+function novoChat() {
+
+    document.getElementById("mensagens").innerHTML = `
+        <div class="mensagem ia">
+            <strong>LoYd AI 🤖</strong>
+            <p>Novo chat iniciado! 👋</p>
+            <p>Como posso ajudar?</p>
+        </div>
+    `;
+
+    historico = [];
+
+    salvarHistorico();
+    atualizarHistorico();
+}
+
+
+/* HISTÓRICO */
+
+function salvarHistorico() {
+
+    localStorage.setItem(
+        "loyD_historico",
+        JSON.stringify(historico)
+    );
+}
+
+
+function atualizarHistorico() {
+
+    const lista =
+        document.getElementById("listaHistorico");
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    const mensagensUsuario =
+        historico.filter(
+            item => item.tipo === "usuario"
+        );
+
+    if (mensagensUsuario.length === 0) {
+
+        lista.innerHTML =
+            "<p>Nenhuma conversa ainda.</p>";
+
+        return;
+    }
+
+    mensagensUsuario
+        .slice(-10)
+        .reverse()
+        .forEach(function(item) {
+
+            const div =
+                document.createElement("div");
+
+            div.className =
+                "item-historico";
+
+            div.textContent =
+                item.texto;
+
+            lista.appendChild(div);
+        });
+}
+
+
+/* MENU */
+
+function abrirMenu() {
+
+    document
+        .getElementById("menuLateral")
+        .classList.add("aberto");
+
+    atualizarHistorico();
+}
+
+
+function fecharMenu() {
+
+    document
+        .getElementById("menuLateral")
+        .classList.remove("aberto");
+}
+
+
+/* MICROFONE 🎤 */
+
+function ouvir() {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+
+        alert(
+            "O reconhecimento de voz não é suportado neste navegador."
+        );
+
+        return;
+    }
+
+    const reconhecimento =
+        new SpeechRecognition();
+
+    reconhecimento.lang = "pt-PT";
+
+    reconhecimento.continuous = false;
+
+    reconhecimento.interimResults = false;
+
+
+    reconhecimento.onstart = function() {
+
+        document.getElementById("texto").placeholder =
+            "Estou a ouvir... 🎤";
+    };
+
+
+    reconhecimento.onresult = function(event) {
+
+        const texto =
+            event.results[0][0].transcript;
+
+        document.getElementById("texto").value =
+            texto;
+
+    };
+
+
+    reconhecimento.onerror = function() {
+
+        document.getElementById("texto").placeholder =
+            "Digite sua mensagem...";
+    };
+
+
+    reconhecimento.onend = function() {
+
+        document.getElementById("texto").placeholder =
+            "Digite sua mensagem...";
+    };
+
+
+    reconhecimento.start();
+}
+
+
+/* ENTER */
+
+document
+    .getElementById("texto")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                enviar();
+
+            }
+
+        }
+    );
+
+
+/* SEGURANÇA */
+
+function escaparHTML(texto) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = texto;
+
+    return div.innerHTML;
+}
+
+
+/* INICIAR */
+
+atualizarHistorico();
